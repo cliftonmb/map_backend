@@ -1,0 +1,2 @@
+### INDEX Activities
+GET http://localhost:3000/activities.json
