@@ -1,2 +1,11 @@
 ### INDEX Activities
 GET http://localhost:3000/activities.json
+
+### CREATE Activities
+POST http://localhost:3000/activities.json
+Content-Type: application/json
+
+{
+  "name": "The Bean",
+  "address": "201 E Randolph St"
+}
