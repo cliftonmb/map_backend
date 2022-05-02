@@ -9,3 +9,6 @@ Content-Type: application/json
   "name": "The Bean",
   "address": "201 E Randolph St"
 }
+
+### Requests
+GET https://app.ticketmaster.com/discovery/v2/events.json?city=chicago&apikey=cYjcLquUvmfEx3jvx8BAwbcBfS7MpIxk
