@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-page = 1
-while page <= 49
+page = 0
+while page <= 0
   event_number = 0
   response = HTTP.get("https://app.ticketmaster.com/discovery/v2/events.json?city=chicago&apikey=cYjcLquUvmfEx3jvx8BAwbcBfS7MpIxk&page=#{page}")
   20.times do
