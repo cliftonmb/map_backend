@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   get "/activities" => "activities#index"
   post "/activities" => "activities#create"
+
+  get "/mapbox_token" => "mapbox_token#index"
 end

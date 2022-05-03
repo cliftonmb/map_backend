@@ -9,7 +9,7 @@
 page = 0
 while page <= 0
   event_number = 0
-  response = HTTP.get("https://app.ticketmaster.com/discovery/v2/events.json?city=chicago&apikey=cYjcLquUvmfEx3jvx8BAwbcBfS7MpIxk&page=#{page}")
+  response = HTTP.get("https://app.ticketmaster.com/discovery/v2/events.json?city=chicago&apikey=#{Rails.application.credentials.ticketmaster_api_key}&page=#{page}")
   20.times do
 
     events = response.parse(:json)

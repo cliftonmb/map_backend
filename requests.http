@@ -10,5 +10,5 @@ Content-Type: application/json
   "address": "201 E Randolph St"
 }
 
-### Requests
-GET https://app.ticketmaster.com/discovery/v2/events.json?city=chicago&apikey=cYjcLquUvmfEx3jvx8BAwbcBfS7MpIxk
+### Mapbox Token
+GET http://localhost:3000/mapbox_token.json
