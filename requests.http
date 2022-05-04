@@ -12,3 +12,12 @@ Content-Type: application/json
 
 ### Mapbox Token
 GET http://localhost:3000/mapbox_token.json
+
+### INDEX Markers
+GET http://localhost:3000/markers.json
+
+### SHOW Markers
+GET http://localhost:3000/markers/:id.json
+
+### CREATE Markers
+POST http://localhost:3000/markers.json

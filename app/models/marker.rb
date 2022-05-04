@@ -1,0 +1,5 @@
+class Marker < ApplicationRecord
+
+  
+
+end

@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   def index
-    activities = Activity.all
+    activities = Activity.where(id: (1..5).to_a)
     render json: activities
   end
 
@@ -13,6 +13,11 @@ class ActivitiesController < ApplicationController
     activity.longitude = activity.longitude.as_json(methods: [:longitude])
     activity.save
     render json: activity
+
+    marker = Marker.new(
+      activities_id: activity.id,
+      activities_address: activity.address
+    )
   end
 
 end

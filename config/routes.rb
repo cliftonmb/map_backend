@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   post "/activities" => "activities#create"
 
   get "/mapbox_token" => "mapbox_token#index"
+
+  get "/markers" => "markers#index"
+  get "/markers/:id" => "markers#show"
+  post "/markers" => "markers#create"
 end
