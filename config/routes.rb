@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get "/activities" => "activities#index"
+  get "/activities/:id" => "activities#show"
   post "/activities" => "activities#create"
 
   get "/mapbox_token" => "mapbox_token#index"

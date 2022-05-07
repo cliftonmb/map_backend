@@ -41,31 +41,38 @@
 #   page += 1
 # end
 
-activities = Activity.where(id: (6..20).to_a)
+# activities = Activity.where(id: (6..20).to_a)
 
-activities.each{|activity|
-  markers = Marker.all
-  if markers.empty? # this is if there are no markers created yet
-    marker = Marker.new(
-    activities_id: activity.id,
-    activities_address: activity.address
-  )
-    marker.save
-    activity.marker_id = marker.id
-    activity.save
+# activities.each{|activity|
+#   markers = Marker.all
+#   if markers.empty? # this is if there are no markers created yet
+#     marker = Marker.new(
+#     activities_id: activity.id,
+#     activities_address: activity.address
+#   )
+#     marker.save
+#     activity.marker_id = marker.id
+#     activity.save
   
-  elsif Marker.where(activities_address: activity.address).empty? # this is for if the address is a new address/address doesn't already have a marker
-    marker = Marker.new(
-    activities_id: activity.id,
-    activities_address: activity.address
-    )
-    marker.save
-    activity.marker_id = marker.id
-    activity.save
-  else # this for the new activities whose addresses already have a marker
-    marker = Marker.find_by(activities_address: activity.address)
-    # activity.address == marker.activities_address
-    activity.marker_id = marker.id
-    activity.save
-  end
+#   elsif Marker.where(activities_address: activity.address).empty? # this is for if the address is a new address/address doesn't already have a marker
+#     marker = Marker.new(
+#     activities_id: activity.id,
+#     activities_address: activity.address
+#     )
+#     marker.save
+#     activity.marker_id = marker.id
+#     activity.save
+#   else # this for the new activities whose addresses already have a marker
+#     marker = Marker.find_by(activities_address: activity.address)
+#     # activity.address == marker.activities_address
+#     activity.marker_id = marker.id
+#     activity.save
+#   end
+# }
+
+markers = Marker.all
+markers.each{|marker|
+  marker.latitude = marker.latitude.as_json(methods: [:latitude])
+  marker.longitude = marker.longitude.as_json(methods: [:longitude])
+  marker.save
 }

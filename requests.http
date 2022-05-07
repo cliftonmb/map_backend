@@ -10,6 +10,9 @@ Content-Type: application/json
   "address": "201 E Randolph St"
 }
 
+### SHOW Activities
+GET http://localhost:3000/activities/2.json
+
 ### Mapbox Token
 GET http://localhost:3000/mapbox_token.json
 
