@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_05_024203) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_07_230345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_05_024203) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "marker_id"
+    t.string "date"
+    t.string "start_time"
+    t.string "image_url"
+    t.string "twitter"
+    t.string "youtube"
+    t.string "homepage"
+    t.string "instagram"
   end
 
   create_table "markers", force: :cascade do |t|
