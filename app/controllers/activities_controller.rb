@@ -8,7 +8,6 @@ class ActivitiesController < ApplicationController
   def show
     activity = Activity.find_by(id: params[:id])
     render json: activity
-  end
 
   def create 
     activity = Activity.new(

@@ -13,4 +13,9 @@ Rails.application.routes.draw do
   get "/markers" => "markers#index"
   get "/markers/:id" => "markers#show"
   post "/markers" => "markers#create"
+
+  post "/users" => "users#create"
+
+  post "/sessions" => "sessions#create"
+
 end

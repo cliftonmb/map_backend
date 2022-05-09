@@ -24,3 +24,23 @@ GET http://localhost:3000/markers/:id.json
 
 ### CREATE Markers
 POST http://localhost:3000/markers.json
+
+### CREATE Users (signup)
+POST http://localhost:3000/users.json
+Content-Type: application/json
+
+{
+  "name": "Test name",
+  "email": "test@test.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+
+### CREATE Sessions (login)
+POST http://localhost:3000/sessions.json
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "password"
+}
