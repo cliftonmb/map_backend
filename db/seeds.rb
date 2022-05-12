@@ -62,80 +62,125 @@
 #   page += 1
 # end
 
-activities = Activity.where(id: (6..20).to_a)
-activities = Activity.all
-activities.each{|activity|
-  markers = Marker.all
-  if markers.empty? # this is if there are no markers created yet
-    marker = Marker.new(
-    activities_id: activity.id,
-    activities_address: activity.address
-  )
-    marker.save
-    activity.marker_id = marker.id
-    activity.save
-  
-  elsif Marker.where(activities_address: activity.address).empty? # this is for if the address is a new address/address doesn't already have a marker
-    marker = Marker.new(
-    activities_id: activity.id,
-    activities_address: activity.address
-    )
-    marker.save
-    activity.marker_id = marker.id
-    activity.save
-  else # this for the new activities whose addresses already have a marker
-    marker = Marker.find_by(activities_address: activity.address)
-    # activity.address == marker.activities_address
-    activity.marker_id = marker.id
-    activity.save
-  end
-}
-
-markers = Marker.all
-markers.each{|marker|
-  marker.latitude = marker.latitude.as_json(methods: [:latitude])
-  marker.longitude = marker.longitude.as_json(methods: [:longitude])
-  marker.save
-}
-
-# CONVERT START TIME TO AM/PM
-# activities = Activity.where(id: (6..20).to_a)
-activities = Activity.all
-activities.each{|activity|
-  hours = (activity.start_time[0] + activity.start_time[1]).to_i
-  minutes = (activity.start_time[3] + activity.start_time[4])
-  
-  if hours == 0
-    activity.start_time = "12:#{minutes} AM"
-  elsif hours < 12
-    activity.start_time = "#{hours}:#{minutes} AM"
-  else
-    hours -= 12
-    activity.start_time = "#{hours}:#{minutes} PM"
-  end
-  activity.save
-}
-months_names = {
-  "01" => "January",
-  "02" => "February",
-  "03" => "March",
-  "04" => "April",
-  "05" => "May",
-  "06" => "June",
-  "07" => "July",
-  "08" => "August",
-  "09" => "September",
-  "10" => "October",
-  "11" => "November",
-  "12" => "December"
-}
-
 # activities = Activity.where(id: (6..20).to_a)
 # activities = Activity.all
+# activities.each{|activity|
+#   markers = Marker.all
+#   if markers.empty? # this is if there are no markers created yet
+#     marker = Marker.new(
+#     activities_id: activity.id,
+#     activities_address: activity.address
+#   )
+#     marker.save
+#     activity.marker_id = marker.id
+#     activity.save
+  
+#   elsif Marker.where(activities_address: activity.address).empty? # this is for if the address is a new address/address doesn't already have a marker
+#     marker = Marker.new(
+#     activities_id: activity.id,
+#     activities_address: activity.address
+#     )
+#     marker.save
+#     activity.marker_id = marker.id
+#     activity.save
+#   else # this for the new activities whose addresses already have a marker
+#     marker = Marker.find_by(activities_address: activity.address)
+#     # activity.address == marker.activities_address
+#     activity.marker_id = marker.id
+#     activity.save
+#   end
+# }
+
+# markers = Marker.all
+# markers.each{|marker|
+#   marker.latitude = marker.latitude.as_json(methods: [:latitude])
+#   marker.longitude = marker.longitude.as_json(methods: [:longitude])
+#   marker.save
+# }
+
+# # CONVERT START TIME TO AM/PM
+# # activities = Activity.where(id: (6..20).to_a)
+# activities = Activity.all
+# activities.each{|activity|
+#   hours = (activity.start_time[0] + activity.start_time[1]).to_i
+#   minutes = (activity.start_time[3] + activity.start_time[4])
+  
+#   if hours == 0
+#     activity.start_time = "12:#{minutes} AM"
+#   elsif hours < 12
+#     activity.start_time = "#{hours}:#{minutes} AM"
+#   else
+#     hours -= 12
+#     activity.start_time = "#{hours}:#{minutes} PM"
+#   end
+#   activity.save
+# }
+# months_names = {
+#   "01" => "January",
+#   "02" => "February",
+#   "03" => "March",
+#   "04" => "April",
+#   "05" => "May",
+#   "06" => "June",
+#   "07" => "July",
+#   "08" => "August",
+#   "09" => "September",
+#   "10" => "October",
+#   "11" => "November",
+#   "12" => "December"
+# }
+
+# # activities = Activity.where(id: (6..20).to_a)
+# # activities = Activity.all
+# activities.each{|activity|
+#   month = activity.date[5] + activity.date[6]
+#   day = (activity.date[8] + activity.date[9]).to_i
+#   year = activity.date[0] + activity.date[1] + activity.date[2] + activity.date[3]
+#   activity.date = "#{months_names[month]} #{day}, #{year}"
+#   activity.save
+# }
+
+####################################
+# 1. get channel id from "Channel by Username"
+# 2. Playlist player by "channel ID"
+
+activities = Activity.all
 activities.each{|activity|
-  month = activity.date[5] + activity.date[6]
-  day = (activity.date[8] + activity.date[9]).to_i
-  year = activity.date[0] + activity.date[1] + activity.date[2] + activity.date[3]
-  activity.date = "#{months_names[month]} #{day}, #{year}"
-  activity.save
+  if activity.youtube.nil?
+    nil
+  else
+    # p activity.id
+    if activity.youtube.include? "user"
+      youtube_username = ""
+      index = -1
+      until activity.youtube[index] == "/"
+        youtube_username << activity.youtube[index]
+        index -= 1
+      end
+      youtube_username.reverse!
+      ### Channel by username
+      channel_by_username = HTTP.get("https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=#{youtube_username}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8 ")
+      channel_by_username = channel_by_username.parse(:json)
+      channel_id = channel_by_username["items"][0]["id"]
+
+      ### Playlist player by channel ID
+      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8")
+      playlist_player_by_channel_id = playlist_player_by_channel_id.parse(:json)
+      activity.youtube = playlist_player_by_channel_id["items"][1]["player"]["embedHtml"]
+      activity.save
+    else
+      channel_id = ""
+      index = -1
+      until activity.youtube[index] == "/"
+        channel_id << activity.youtube[index]
+        index -= 1
+      end
+      channel_id.reverse!
+      ### Playlist player by channel ID
+      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8")
+      playlist_player_by_channel_id = playlist_player_by_channel_id.parse(:json)
+      activity.youtube = playlist_player_by_channel_id["items"][1]["player"]["embedHtml"]
+      activity.save
+    end
+  end
 }

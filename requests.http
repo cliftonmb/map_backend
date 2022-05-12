@@ -30,8 +30,8 @@ POST http://localhost:3000/users.json
 Content-Type: application/json
 
 {
-  "name": "Test name",
-  "email": "test@test.com",
+  "name": "Teliyah",
+  "email": "tt@email.com",
   "password": "password",
   "password_confirmation": "password"
 }
@@ -41,6 +41,24 @@ POST http://localhost:3000/sessions.json
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "tt@email.com",
   "password": "password"
 }
+
+### INDEX Favorites
+GET http://localhost:3000/favorites.json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTIyOTE1NzF9.LNW0RoOjpSB8S6Zh7Tnm4t1RhiyuCqkH5vCAp_L3_1c
+
+### CREATE Favorites
+POST http://localhost:3000/favorites.json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTIyOTE1NzF9.LNW0RoOjpSB8S6Zh7Tnm4t1RhiyuCqkH5vCAp_L3_1c
+Content-Type: application/json
+
+{
+  "activity_id": 8,
+  "user_id": 2
+}
+
+### DESTROY Favorites
+DELETE http://localhost:3000/favorites/7.json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTIyOTE1NzF9.LNW0RoOjpSB8S6Zh7Tnm4t1RhiyuCqkH5vCAp_L3_1c
