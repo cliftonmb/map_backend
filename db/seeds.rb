@@ -159,12 +159,12 @@ activities.each{|activity|
       end
       youtube_username.reverse!
       ### Channel by username
-      channel_by_username = HTTP.get("https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=#{youtube_username}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8 ")
+      channel_by_username = HTTP.get("https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=#{youtube_username}&key=#{Rails.application.credentials.google_api_key} ")
       channel_by_username = channel_by_username.parse(:json)
       channel_id = channel_by_username["items"][0]["id"]
 
       ### Playlist player by channel ID
-      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8")
+      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=#{Rails.application.credentials.google_api_key}")
       playlist_player_by_channel_id = playlist_player_by_channel_id.parse(:json)
       activity.youtube = playlist_player_by_channel_id["items"][1]["player"]["embedHtml"]
       activity.save
@@ -177,7 +177,7 @@ activities.each{|activity|
       end
       channel_id.reverse!
       ### Playlist player by channel ID
-      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=AIzaSyBHlF5ksYmREEZWNVyd4nFjdYg5Xg81Mt8")
+      playlist_player_by_channel_id = HTTP.get("https://youtube.googleapis.com/youtube/v3/playlists?part=player&channelId=#{channel_id}&key=#{Rails.application.credentials.google_api_key}")
       playlist_player_by_channel_id = playlist_player_by_channel_id.parse(:json)
       activity.youtube = playlist_player_by_channel_id["items"][1]["player"]["embedHtml"]
       activity.save
