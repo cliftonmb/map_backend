@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   post "/favorites" => "favorites#create"
   delete "/favorites/:id" => "favorites#destroy"
 
+  get "/genres" => "genres#index"
+
 end

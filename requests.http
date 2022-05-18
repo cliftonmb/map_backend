@@ -1,5 +1,11 @@
 ### INDEX Activities
 GET http://localhost:3000/activities.json
+Content-Type: application/json
+
+{
+  "genre": "Sports",
+  "sub_genre": "NFL"
+}
 
 ### CREATE Activities
 POST http://localhost:3000/activities.json
@@ -62,3 +68,6 @@ Content-Type: application/json
 ### DESTROY Favorites
 DELETE http://localhost:3000/favorites/7.json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTIyOTE1NzF9.LNW0RoOjpSB8S6Zh7Tnm4t1RhiyuCqkH5vCAp_L3_1c
+
+### INDEX Genres
+GET http://localhost:3000/genres.json

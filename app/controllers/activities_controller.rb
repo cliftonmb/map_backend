@@ -3,7 +3,8 @@ class ActivitiesController < ApplicationController
 
   def index
     # activities = Activity.where(id: (1..5).to_a)
-    activities = Activity.all
+    activities = Activity.where(sub_genre: params[:sub_genre], genre: params[:genre])
+    # activities = Activity.all
     render json: activities
   end
 
